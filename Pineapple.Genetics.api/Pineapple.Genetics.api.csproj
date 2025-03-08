@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b857faa9-c2c1-40b9-b114-8a6e0dd8f43f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,11 +17,6 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="8.0.11" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Abstractions\" />
-    <Folder Include="Services\Implementations\" />
   </ItemGroup>
 
 </Project>
