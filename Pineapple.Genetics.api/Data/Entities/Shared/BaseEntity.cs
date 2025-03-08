@@ -1,4 +1,4 @@
-﻿namespace Pineapple.Genetics.api.Data.Entities
+﻿namespace Pineapple.Genetics.api.Data.Entities.Shared
 {
     public class BaseEntity
     {

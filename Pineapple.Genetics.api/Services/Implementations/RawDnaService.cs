@@ -21,16 +21,16 @@ namespace Pineapple.Genetics.api.Services.Implementations
             };
 
             // Save to the database
-            try
-            {
-                _context.CsvFileRecords.Add(csvRecord);
-                await _context.SaveChangesAsync();
-                return Ok(new { Id = csvRecord.Id, Message = "File uploaded successfully." });
-            }
-            catch (DbUpdateException ex)
-            {
-                return StatusCode(500, $"Failed to save file: {ex.InnerException?.Message ?? ex.Message}");
-            }
+            // try
+            // {
+            //     _context.CsvFileRecords.Add(csvRecord);
+            //     await _context.SaveChangesAsync();
+            //     return Ok(new { Id = csvRecord.Id, Message = "File uploaded successfully." });
+            // }
+            // catch (DbUpdateException ex)
+            // {
+            //     return StatusCode(500, $"Failed to save file: {ex.InnerException?.Message ?? ex.Message}");
+            // }
         }
     }
 }
