@@ -20,7 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\UserManagement\" />
+    <Folder Include="Controllers\UserManagement\Commands\" />
+    <Folder Include="Controllers\UserManagement\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pineapple.Genetics.domain\Pineapple.Genetics.domain.csproj" />
+    <ProjectReference Include="..\Pineapple.Genetics.infrastructure\Pineapple.Genetics.infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
