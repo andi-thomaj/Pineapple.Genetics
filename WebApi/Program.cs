@@ -1,7 +1,10 @@
+using System.Text;
 using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.UserManagement.Repository;
 using MediatR.Extensions.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using WebApi.Middleware;
 
@@ -26,6 +29,22 @@ namespace WebApi
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = builder.Configuration["AppSettings:Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = builder.Configuration["AppSettings:Audience"],
+                        ValidateLifetime = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!)),
+                        ValidateIssuerSigningKey = true
+                    };
+                });
 
             var app = builder.Build();
 
