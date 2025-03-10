@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/.idea/.idea.Pineapple.Genetics/.idea/encodings.xml
+/.idea/.idea.Pineapple.Genetics/.idea/indexLayout.xml
+/.idea/.idea.Pineapple.Genetics/.idea/vcs.xml
