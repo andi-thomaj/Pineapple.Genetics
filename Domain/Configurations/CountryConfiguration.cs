@@ -1,4 +1,6 @@
 ﻿using Domain.Shared;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Domain.Configurations
 {

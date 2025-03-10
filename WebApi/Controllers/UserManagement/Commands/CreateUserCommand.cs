@@ -1,15 +1,55 @@
-﻿using MediatR;
+﻿using Domain;
+using Domain.Configurations;
+using FluentValidation;
+using Infrastructure.EntityFramework.UserManagement.Repository;
+using MediatR;
 
 namespace WebApi.Controllers.UserManagement.Commands
 {
-    public class CreateUserCommand : IRequest<Unit>
+    public record CreateUserCommand(
+        string? FirstName,
+        string? MiddleName,
+        string? LastName,
+        string? Username,
+        string Email,
+        string Password,
+        string? Settings) : IRequest<Unit>;
+
+    public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     {
-        public string? FirstName { get; set; }
-        public string? MiddleName { get; set; }
-        public string? LastName { get; set; }
-        public string? Username { get; set; }
-        public required string Email { get; set; }
-        public required string Password { get; set; }
-        public required string Settings { get; set; }
+        public CreateUserCommandValidator(IUserRepository userRepository)
+        {
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .EmailAddress()
+                .MustAsync(async (email, _) => !await userRepository.EmailExists(email))
+                .WithMessage((command, email) => $"Email address: {email} already exists.");
+
+            RuleFor(x => x.Password)
+                .NotEmpty()
+                .MinimumLength(UserConfiguration.Settings.PasswordMinLength)
+                .MaximumLength(UserConfiguration.Settings.PasswordMaxLength);
+        }
+    }
+
+    public class CreateUserCommandHandler(IUserRepository userRepository) : IRequestHandler<CreateUserCommand, Unit>
+    {
+        public async Task<Unit> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        {
+            var user = new User
+            {
+                FirstName = request.FirstName,
+                MiddleName = request.MiddleName,
+                LastName = request.LastName,
+                Username = request.Username ?? request.Email,
+                Email = request.Email,
+                Password = request.Password,
+                Settings = request.Settings ?? "{}"
+            };
+
+            await userRepository.CreateUser(user);
+
+            return Unit.Value;
+        }
     }
 }
