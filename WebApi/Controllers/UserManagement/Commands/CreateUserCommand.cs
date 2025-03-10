@@ -22,6 +22,7 @@ namespace WebApi.Controllers.UserManagement.Commands
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .EmailAddress()
+                .WithMessage((command, email) => $"Email: {email} is not a valid email address.")
                 .MustAsync(async (email, _) => !await userRepository.EmailExists(email))
                 .WithMessage((command, email) => $"Email address: {email} already exists.");
 

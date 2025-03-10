@@ -3,6 +3,7 @@ using Infrastructure.EntityFramework.UserManagement.Repository;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using WebApi.Middleware;
 
 namespace WebApi
 {
@@ -38,7 +39,7 @@ namespace WebApi
                     options.HideDownloadButton = true;
                 });
             }
-
+            app.UseCustomExceptionMiddleware();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
