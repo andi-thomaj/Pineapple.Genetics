@@ -4,22 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Domain.Configurations
 {
-    public class RawDnaConfiguration : BaseConfiguration, IEntityTypeConfiguration<RawDna>
+    public class RoleConfiguration : BaseConfiguration, IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<RawDna> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(x => x.FileName)
+            builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(Settings.NameMaxLength);
-
-            builder.Property(e => e.GeneticFile)
-                .IsRequired()
-                .HasMaxLength(Settings.GeneticFileMaxLength);
-
-            builder.Property(e => e.IsDeleted)
-                .IsRequired();
 
             builder.Property(x => x.CreatedBy)
                 .IsRequired()
@@ -35,13 +28,12 @@ namespace Domain.Configurations
             builder.Property(x => x.UpdatedAt)
                 .IsRequired();
 
-            builder.ToTable("rawDnas_tb");
+            builder.ToTable("roles_tb");
         }
 
         public class Settings
         {
-            public const int NameMaxLength = 40;
-            public const int GeneticFileMaxLength = 1048576; // 1MB
+            public const int NameMaxLength = 50;
         }
     }
 }

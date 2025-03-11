@@ -8,66 +8,58 @@ namespace Domain.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder
-                .HasKey(e => e.Id)
-                .HasName("id");
+            builder.HasKey(e => e.Id);
 
             builder.Property(x => x.FirstName)
-                .HasColumnName("first_name")
                 .IsRequired(Settings.No)
                 .HasMaxLength(Settings.FirstNameMaxLength);
 
             builder.Property(x => x.MiddleName)
-                .HasColumnName("middle_name")
                 .IsRequired(Settings.No)
                 .HasMaxLength(Settings.MiddleNameMaxLength);
 
             builder.Property(x => x.LastName)
-                .HasColumnName("last_name")
                 .IsRequired(Settings.No)
                 .HasMaxLength(Settings.LastNameMaxLength);
 
             builder.Property(x => x.Email)
-                .HasColumnName("email")
                 .IsRequired()
                 .HasMaxLength(Settings.EmailMaxLength);
 
             builder.Property(x => x.Password)
-                .HasColumnName("password")
                 .IsRequired(Settings.No)
                 .HasMaxLength(Settings.PasswordMaxLength);
 
             builder.Property(x => x.Username)
-                .HasColumnName("username")
                 .IsRequired()
                 .HasMaxLength(Settings.Username);
 
             builder.Property(x => x.Settings)
-                .HasColumnName("settings")
                 .HasColumnType("jsonb")
                 .IsRequired(Settings.No);
 
             builder.Property(x => x.CreatedBy)
-                .HasColumnName("created_by")
                 .IsRequired()
                 .HasMaxLength(CreatedByMaxLength);
 
             builder.Property(x => x.CreatedAt)
-                .HasColumnName("created_at")
                 .IsRequired();
 
             builder.Property(x => x.UpdatedBy)
-                .HasColumnName("updated_by")
                 .IsRequired()
                 .HasMaxLength(UpdatedByMaxLength);
 
             builder.Property(x => x.UpdatedAt)
-                .HasColumnName("updated_at")
                 .IsRequired();
+
+            builder.HasOne(x => x.Role)
+                .WithMany(x => x.Users)
+                .HasForeignKey(x => x.RoleId)
+                .HasConstraintName("FK_users_tb_roleId_TO_roles_tb");
 
             builder.ToTable("users_tb");
         }
-        public static class Settings
+        public class Settings
         {
             public const int FirstNameMaxLength = 50;
             public const int MiddleNameMaxLength = 50;
