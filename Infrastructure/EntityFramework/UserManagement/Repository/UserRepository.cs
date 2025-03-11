@@ -19,5 +19,8 @@ namespace Infrastructure.EntityFramework.UserManagement.Repository
 
         public async Task<bool> EmailExists(string email)
          => await dbContext.Users.AnyAsync(x => x.Email == email);
+
+        public async Task<string?> GetRoleByUserId(int id)
+         => await dbContext.Users.Where(x => x.Id == id).Select(x => x.Role.Name).FirstOrDefaultAsync();
     }
 }

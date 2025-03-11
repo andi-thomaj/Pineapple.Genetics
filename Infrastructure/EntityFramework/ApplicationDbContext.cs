@@ -16,6 +16,25 @@ namespace Infrastructure.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Domain"));
+
+            var role = new Role { Id = 1, Name = "Admin" };
+            modelBuilder.Entity<Role>().HasData([
+                role
+            ]);
+            modelBuilder.Entity<User>().HasData([
+                new User
+                {
+                    Id = 1,
+                    FirstName = "John",
+                    MiddleName = "Doe",
+                    LastName = "Smith",
+                    Username = "johnsmith",
+                    Email = "andi.dev94@gmail.com",
+                    Password = "password",
+                    RoleId = role.Id,
+                    Settings = "{}"
+                }
+            ]);
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -18,7 +18,6 @@ namespace Infrastructure.Services.Implementations
         private async Task<string> CreateToken(string email)
         {
             var user = await userRepository.GetUserByEmail(email);
-
             var claims = new List<Claim>
             {
                 new(ClaimTypes.Email, user.Email),
