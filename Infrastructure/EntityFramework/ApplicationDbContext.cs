@@ -19,9 +19,9 @@ namespace Infrastructure.EntityFramework
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Domain"));
 
-            var role = new Role { Id = 1, Name = "Admin" };
             modelBuilder.Entity<Role>().HasData([
-                role
+                new Role { Id = (int)Domain.Roles.Admin, Name = Domain.Roles.Admin.ToString() },
+                new Role { Id = (int)Domain.Roles.Basic, Name = Domain.Roles.Basic.ToString() }
             ]);
             modelBuilder.Entity<User>().HasData([
                 new User
@@ -33,7 +33,7 @@ namespace Infrastructure.EntityFramework
                     Username = "johnsmith",
                     Email = "andi.dev94@gmail.com",
                     Password = "password",
-                    RoleId = role.Id,
+                    RoleId = (int)Domain.Roles.Admin,
                     Settings = "{}"
                 }
             ]);

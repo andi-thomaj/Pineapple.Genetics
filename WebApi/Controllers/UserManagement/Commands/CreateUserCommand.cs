@@ -45,7 +45,7 @@ namespace WebApi.Controllers.UserManagement.Commands
                 Username = request.Username ?? request.Email,
                 Email = request.Email,
                 Password = request.Password,
-                RoleId = 1,
+                RoleId = (int)Roles.Basic,
                 Settings = request.Settings ?? "{}"
             };
 
