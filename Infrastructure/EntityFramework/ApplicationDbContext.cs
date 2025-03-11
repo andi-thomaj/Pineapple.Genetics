@@ -15,6 +15,8 @@ namespace Infrastructure.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Domain"));
 
             var role = new Role { Id = 1, Name = "Admin" };
@@ -35,7 +37,6 @@ namespace Infrastructure.EntityFramework
                     Settings = "{}"
                 }
             ]);
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
