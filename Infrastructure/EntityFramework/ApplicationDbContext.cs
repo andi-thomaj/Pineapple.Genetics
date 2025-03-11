@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Domain;
+using Domain.UserManagement;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.EntityFramework
@@ -20,8 +21,8 @@ namespace Infrastructure.EntityFramework
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Domain"));
 
             modelBuilder.Entity<Role>().HasData([
-                new Role { Id = (int)Domain.Roles.Admin, Name = Domain.Roles.Admin.ToString() },
-                new Role { Id = (int)Domain.Roles.Basic, Name = Domain.Roles.Basic.ToString() }
+                new Role { Id = (int)Domain.UserManagement.Roles.Admin, Name = Domain.UserManagement.Roles.Admin.ToString() },
+                new Role { Id = (int)Domain.UserManagement.Roles.Basic, Name = Domain.UserManagement.Roles.Basic.ToString() }
             ]);
             modelBuilder.Entity<User>().HasData([
                 new User
@@ -33,7 +34,7 @@ namespace Infrastructure.EntityFramework
                     Username = "johnsmith",
                     Email = "andi.dev94@gmail.com",
                     Password = "password",
-                    RoleId = (int)Domain.Roles.Admin,
+                    RoleId = (int)Domain.UserManagement.Roles.Admin,
                     Settings = "{}"
                 }
             ]);

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.Configurations
+namespace Domain.UserManagement.Configurations
 {
     public class UserConfiguration : BaseConfiguration, IEntityTypeConfiguration<User>
     {

@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Domain.UserManagement;
 
 namespace Infrastructure.EntityFramework.UserManagement.Repository
 {

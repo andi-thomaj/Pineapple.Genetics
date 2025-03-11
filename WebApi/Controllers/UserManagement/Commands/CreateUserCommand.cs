@@ -1,5 +1,5 @@
-﻿using Domain;
-using Domain.Configurations;
+﻿using Domain.UserManagement;
+using Domain.UserManagement.Configurations;
 using FluentValidation;
 using Infrastructure.EntityFramework.UserManagement.Repository;
 using MediatR;

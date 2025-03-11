@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Domain.UserManagement;
 using WebApi.Controllers.UserManagement.Queries;
 
 namespace WebApi.Controllers
