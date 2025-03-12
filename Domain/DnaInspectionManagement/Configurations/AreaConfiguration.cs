@@ -1,5 +1,4 @@
-﻿using Domain.DnaInspectionManagement;
-using Domain.Shared;
+﻿using Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

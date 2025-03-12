@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Domain;
 using Infrastructure.EntityFramework.UserManagement.Repository;
 using Infrastructure.Options;
 using Infrastructure.Services.Abstractions;
@@ -22,7 +20,7 @@ namespace Infrastructure.Services.Implementations
             {
                 new(ClaimTypes.Email, user.Email),
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                // new(ClaimTypes.Role, createTokenDto.Role)
+                new(ClaimTypes.Role, user.Role.Name)
             };
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_jwtOptions.Secret));

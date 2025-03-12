@@ -3,6 +3,7 @@ using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.UserManagement.Repository;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
@@ -18,7 +19,11 @@ namespace WebApi
             var configuration = builder.Configuration;
             var services = builder.Services;
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddMvcOptions(options =>
+                {
+                    options.Conventions.Add(new RouteTokenTransformerConvention(new LowercaseRouteTransformer()));
+                }); ;
             services.AddOpenApi();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
             services.AddFluentValidation([typeof(Program).Assembly]);
@@ -67,6 +72,14 @@ namespace WebApi
             app.MapControllers();
 
             app.Run();
+        }
+
+        public class LowercaseRouteTransformer : IOutboundParameterTransformer
+        {
+            public string? TransformOutbound(object? value)
+            {
+                return value?.ToString()?.ToLowerInvariant();
+            }
         }
     }
 }

@@ -39,6 +39,9 @@ namespace Domain.DnaInspectionManagement.Configurations
             builder.Property(x => x.UpdatedAt)
                 .IsRequired();
 
+            builder.HasMany(x => x.Countries)
+                .WithMany(x => x.DnaInspections);
+
             builder.ToTable("dnaInspections_tb");
         }
 

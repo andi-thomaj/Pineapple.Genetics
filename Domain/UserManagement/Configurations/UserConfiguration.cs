@@ -52,6 +52,10 @@ namespace Domain.UserManagement.Configurations
             builder.Property(x => x.UpdatedAt)
                 .IsRequired();
 
+            builder
+                .Navigation(x => x.Role)
+                .AutoInclude();
+
             builder.HasOne(x => x.Role)
                 .WithMany(x => x.Users)
                 .HasForeignKey(x => x.RoleId)
