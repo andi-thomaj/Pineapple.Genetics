@@ -2,17 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.Configurations
+namespace Domain.DnaInspectionManagement.Configurations
 {
-    public class EurogenesGlobalConfiguration : BaseConfiguration, IEntityTypeConfiguration<EurogenesGlobal>
+    public class CountryConfiguration : BaseConfiguration, IEntityTypeConfiguration<Country>
     {
-        public void Configure(EntityTypeBuilder<EurogenesGlobal> builder)
+        public void Configure(EntityTypeBuilder<Country> builder)
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.Coordinates)
+            builder.Property(a => a.Name)
                 .IsRequired()
-                .HasMaxLength(Settings.CoordinatesMaxLength);
+                .HasMaxLength(Settings.NameMaxLength);
 
             builder.Property(x => x.CreatedBy)
                 .IsRequired()
@@ -28,12 +28,12 @@ namespace Domain.Configurations
             builder.Property(x => x.UpdatedAt)
                 .IsRequired();
 
-            builder.ToTable("eurogenesGlobals_tb");
+            builder.ToTable("countries_tb");
         }
 
         public class Settings
         {
-            public const int CoordinatesMaxLength = 200;
+            public const int NameMaxLength = 40;
         }
     }
 }

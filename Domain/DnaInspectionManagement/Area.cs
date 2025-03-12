@@ -1,6 +1,6 @@
 ﻿using Domain.Shared;
 
-namespace Domain
+namespace Domain.DnaInspectionManagement
 {
     public class Area : BaseEntity
     {

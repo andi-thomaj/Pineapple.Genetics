@@ -1,25 +1,19 @@
-﻿using Domain.Shared;
+﻿using Domain.DnaInspectionManagement;
+using Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.Configurations
+namespace Domain.DnaInspectionManagement.Configurations
 {
-    public class RawDnaConfiguration : BaseConfiguration, IEntityTypeConfiguration<RawDna>
+    public class AreaConfiguration : BaseConfiguration, IEntityTypeConfiguration<Area>
     {
-        public void Configure(EntityTypeBuilder<RawDna> builder)
+        public void Configure(EntityTypeBuilder<Area> builder)
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(x => x.FileName)
+            builder.Property(a => a.Name)
                 .IsRequired()
                 .HasMaxLength(Settings.NameMaxLength);
-
-            builder.Property(e => e.GeneticFile)
-                .IsRequired()
-                .HasMaxLength(Settings.GeneticFileMaxLength);
-
-            builder.Property(e => e.IsDeleted)
-                .IsRequired();
 
             builder.Property(x => x.CreatedBy)
                 .IsRequired()
@@ -35,13 +29,18 @@ namespace Domain.Configurations
             builder.Property(x => x.UpdatedAt)
                 .IsRequired();
 
-            builder.ToTable("rawDnas_tb");
+            builder
+                .HasOne(x => x.Country)
+                .WithMany(x => x.Areas)
+                .HasForeignKey(x => x.CountryId)
+                .HasConstraintName("FK_areas_tb_countryId_TO_countries_tb");
+
+            builder.ToTable("areas_tb");
         }
 
         public class Settings
         {
             public const int NameMaxLength = 40;
-            public const int GeneticFileMaxLength = 1048576; // 1MB
         }
     }
 }
