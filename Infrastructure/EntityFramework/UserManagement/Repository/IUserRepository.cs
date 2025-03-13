@@ -9,5 +9,6 @@ namespace Infrastructure.EntityFramework.UserManagement.Repository
         Task<User?> GetUserByEmail(string email);
         Task<bool> EmailExists(string email);
         Task<string?> GetRoleByUserId(int id);
+        Task<bool> PasswordIsCorrect(string email, string password);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Infrastructure.EntityFramework;
+﻿using Infrastructure.Dtos;
+using Infrastructure.EntityFramework;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers.UserManagement.Commands;
@@ -21,6 +22,16 @@ namespace WebApi.Controllers.UserManagement
         public async Task<ActionResult<GetUserByEmailQuery.Result>> GetUserByEmail([FromBody] GetUserByEmailQuery.Query query)
         {
             var result = await mediator.Send(query);
+            return Ok(result);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult<TokenResponseDto>> Login(UserDto request)
+        {
+            var result = await authService.LoginAsync(request);
+            if (result is null)
+                return BadRequest("Invalid username or password.");
+
             return Ok(result);
         }
     }

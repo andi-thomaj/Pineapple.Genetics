@@ -13,12 +13,12 @@ namespace Infrastructure.Services.Implementations
     public class AuthenticationService(IUserRepository userRepository, IOptions<JwtOptions> jwtOptions) : IAuthenticationService
     {
         private readonly JwtOptions _jwtOptions = jwtOptions.Value;
-        private async Task<string> CreateToken(string email)
+        public async Task<string> CreateToken(string email)
         {
             var user = await userRepository.GetUserByEmail(email);
             var claims = new List<Claim>
             {
-                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.Email, user!.Email),
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(ClaimTypes.Role, user.Role.Name)
             };
@@ -38,7 +38,7 @@ namespace Infrastructure.Services.Implementations
             return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
         }
 
-        private string GenerateRefreshToken()
+        public string GenerateRefreshToken()
         {
             var randomNumber = new byte[32];
             using var rng = RandomNumberGenerator.Create();
