@@ -1,8 +1,10 @@
-﻿namespace Infrastructure.Services.Abstractions
+﻿using Domain.UserManagement;
+
+namespace Infrastructure.Services.Abstractions
 {
     public interface IAuthenticationService
     {
         Task<string> CreateToken(string email);
-        string GenerateRefreshToken();
+        Task<string> GenerateAndSaveRefreshTokenAsync(string email);
     }
 }

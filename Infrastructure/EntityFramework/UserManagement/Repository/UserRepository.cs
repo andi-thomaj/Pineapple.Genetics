@@ -12,7 +12,7 @@ namespace Infrastructure.EntityFramework.UserManagement.Repository
         }
 
         public async Task<User?> GetUserById(int id)
-         => await dbContext.Users.FirstOrDefaultAsync(x => x.Id == id);
+         => await dbContext.Users.FindAsync(id);
 
         public async Task<User?> GetUserByEmail(string email)
          => await dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
@@ -28,5 +28,11 @@ namespace Infrastructure.EntityFramework.UserManagement.Repository
 
         public async Task<bool> UsernameExists(string username)
          => await dbContext.Users.AnyAsync(x => x.Username == username);
+
+        public async Task UpdateUser(User user)
+        {
+            dbContext.Users.Update(user);
+            await dbContext.SaveChangesAsync();
+        }
     }
 }

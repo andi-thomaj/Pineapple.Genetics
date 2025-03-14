@@ -46,7 +46,7 @@ namespace WebApi.Controllers.UserManagement.Queries
         {
             var user = await userRepository.GetUserByEmail(request.Email);
             var jwt = await authenticationService.CreateToken(user!.Email);
-            var refreshToken = authenticationService.GenerateRefreshToken();
+            var refreshToken = await authenticationService.GenerateAndSaveRefreshTokenAsync(user.Email);
 
             return new LoginQuery.Result(
                  user.FirstName ?? string.Empty
