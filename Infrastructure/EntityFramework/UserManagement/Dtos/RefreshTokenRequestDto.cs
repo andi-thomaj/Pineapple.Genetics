@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Dtos
+﻿namespace Infrastructure.EntityFramework.UserManagement.Dtos
 {
     public class RefreshTokenRequestDto
     {

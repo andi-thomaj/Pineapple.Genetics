@@ -25,5 +25,8 @@ namespace Infrastructure.EntityFramework.UserManagement.Repository
 
         public async Task<bool> PasswordIsCorrect(string email, string password)
          => await dbContext.Users.AnyAsync(x => x.Email == email && x.Password == password);
+
+        public async Task<bool> UsernameExists(string username)
+         => await dbContext.Users.AnyAsync(x => x.Username == username);
     }
 }

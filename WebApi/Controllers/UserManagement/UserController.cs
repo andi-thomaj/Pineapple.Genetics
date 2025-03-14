@@ -1,5 +1,5 @@
-﻿using Infrastructure.Dtos;
-using Infrastructure.EntityFramework;
+﻿using Infrastructure.EntityFramework;
+using Infrastructure.EntityFramework.UserManagement.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Controllers.UserManagement.Commands;

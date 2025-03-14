@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Infrastructure.Services.Abstractions
+﻿namespace Infrastructure.Services.Abstractions
 {
     public interface IAuthenticationService
     {
+        Task<string> CreateToken(string email);
+        string GenerateRefreshToken();
     }
 }

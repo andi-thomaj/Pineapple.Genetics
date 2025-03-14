@@ -32,7 +32,7 @@ namespace Domain.UserManagement.Configurations
 
             builder.Property(x => x.Username)
                 .IsRequired()
-                .HasMaxLength(Settings.Username);
+                .HasMaxLength(Settings.UsernameMaxLength);
 
             builder.Property(x => x.Settings)
                 .HasColumnType("jsonb")
@@ -68,7 +68,8 @@ namespace Domain.UserManagement.Configurations
             public const int FirstNameMaxLength = 50;
             public const int MiddleNameMaxLength = 50;
             public const int LastNameMaxLength = 50;
-            public const int Username = 50;
+            public const int UsernameMinLength = 5;
+            public const int UsernameMaxLength = 50;
             public const int EmailMaxLength = 50;
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 16;

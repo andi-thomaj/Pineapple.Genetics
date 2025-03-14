@@ -5,24 +5,19 @@ using MediatR;
 
 namespace WebApi.Controllers.UserManagement.Queries
 {
-    public class LoginQuery
+    public record LoginQuery
     {
-        public class Query : IRequest<Result>
-        {
-            public required string Email { get; set; }
-            public required string Password { get; set; }
-        }
+        public record Query(string Email, string Password) : IRequest<Result>;
 
-        public class Result
-        {
-            public string FirstName { get; set; } = string.Empty;
-            public string MiddleName { get; set; } = string.Empty;
-            public string LastName { get; set; } = string.Empty;
-            public required string UserName { get; set; }
-            public required string Email { get; set; }
-            public string Settings { get; set; } = string.Empty;
-            public required string Jwt { get; set; }
-        }
+        public record Result(
+            string FirstName,
+            string MiddleName,
+            string LastName,
+            string UserName,
+            string Email,
+            string Settings,
+            string Jwt,
+            string RefreshToken);
     }
 
     public class LoginQueryValidator : AbstractValidator<LoginQuery.Query>
@@ -40,15 +35,28 @@ namespace WebApi.Controllers.UserManagement.Queries
                 .MinimumLength(8)
                 .MaximumLength(20)
                 .MustAsync(async (query, _, _) => await userRepository.PasswordIsCorrect(query.Email, query.Password))
-                .WithMessage("Password or email is incorrect. Please try again.");
+                .WithMessage("Password is incorrect. Please try again.");
         }
     }
 
-    // public class LoginQueryHandler(IAuthenticationService authenticationService) : IRequestHandler<LoginQuery.Query, LoginQuery.Result>
-    // {
-    //     public Task<LoginQuery.Result> Handle(LoginQuery.Query request, CancellationToken cancellationToken)
-    //     {
-    //         var user = 
-    //     }
-    // }
+    public class LoginQueryHandler(IAuthenticationService authenticationService
+        , IUserRepository userRepository) : IRequestHandler<LoginQuery.Query, LoginQuery.Result>
+    {
+        public async Task<LoginQuery.Result> Handle(LoginQuery.Query request, CancellationToken cancellationToken)
+        {
+            var user = await userRepository.GetUserByEmail(request.Email);
+            var jwt = await authenticationService.CreateToken(user!.Email);
+            var refreshToken = authenticationService.GenerateRefreshToken();
+
+            return new LoginQuery.Result(
+                 user.FirstName ?? string.Empty
+                ,user.MiddleName ?? string.Empty
+                ,user.LastName ?? string.Empty
+                ,user.Username
+                ,user.Email
+                ,user.Settings
+                ,jwt
+                ,refreshToken);
+        }
+    }
 }

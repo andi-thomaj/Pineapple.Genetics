@@ -31,7 +31,7 @@ namespace Infrastructure.Services.Implementations
                 issuer: _jwtOptions.Issuer,
                 audience: _jwtOptions.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(1),
+                expires: DateTime.UtcNow.AddSeconds(10),
                 signingCredentials: creds
             );
 
