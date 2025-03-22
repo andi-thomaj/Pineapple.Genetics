@@ -1,4 +1,4 @@
-﻿namespace Domain.Shared
+﻿namespace Domain
 {
     public class BaseEntity
     {

@@ -4,14 +4,14 @@ using MediatR;
 
 namespace WebApi.Controllers.UserManagement.Queries
 {
-    public class GetUserByEmailQuery
+    public record GetUserByEmailQuery
     {
-        public class Query : IRequest<Result>
+        public record Query : IRequest<Result>
         {
             public required string Email { get; set; }
         }
 
-        public class Result
+        public record Result
         {
             public string FirstName { get; set; } = string.Empty;
             public string MiddleName { get; set; } = string.Empty;

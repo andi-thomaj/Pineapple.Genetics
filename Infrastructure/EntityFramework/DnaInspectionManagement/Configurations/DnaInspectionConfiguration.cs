@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Domain.Shared;
+﻿using Domain.DnaInspectionManagement;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.DnaInspectionManagement.Configurations
+namespace Infrastructure.EntityFramework.DnaInspectionManagement.Configurations
 {
     public class DnaInspectionConfiguration : BaseConfiguration, IEntityTypeConfiguration<DnaInspection>
     {

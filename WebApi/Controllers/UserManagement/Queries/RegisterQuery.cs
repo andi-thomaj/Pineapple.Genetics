@@ -70,6 +70,7 @@ namespace WebApi.Controllers.UserManagement.Queries
             await userRepository.CreateUser(user);
             var jwt = await authenticationService.CreateToken(user.Email);
             var refreshToken = await authenticationService.GenerateAndSaveRefreshTokenAsync(user.Email);
+
             return new RegisterQuery.Result(
                 user.FirstName ?? string.Empty,
                 user.MiddleName ?? string.Empty,

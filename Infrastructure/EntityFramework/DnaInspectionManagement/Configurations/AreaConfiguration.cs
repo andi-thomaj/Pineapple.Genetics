@@ -1,16 +1,16 @@
-﻿using Domain.Shared;
+﻿using Domain.DnaInspectionManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.UserManagement.Configurations
+namespace Infrastructure.EntityFramework.DnaInspectionManagement.Configurations
 {
-    public class RoleConfiguration : BaseConfiguration, IEntityTypeConfiguration<Role>
+    public class AreaConfiguration : BaseConfiguration, IEntityTypeConfiguration<Area>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<Area> builder)
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(x => x.Name)
+            builder.Property(a => a.Name)
                 .IsRequired()
                 .HasMaxLength(Settings.NameMaxLength);
 
@@ -28,12 +28,18 @@ namespace Domain.UserManagement.Configurations
             builder.Property(x => x.UpdatedAt)
                 .IsRequired();
 
-            builder.ToTable("roles_tb");
+            builder
+                .HasOne(x => x.Country)
+                .WithMany(x => x.Areas)
+                .HasForeignKey(x => x.CountryId)
+                .HasConstraintName("FK_areas_tb_countryId_TO_countries_tb");
+
+            builder.ToTable("areas_tb");
         }
 
         public class Settings
         {
-            public const int NameMaxLength = 50;
+            public const int NameMaxLength = 40;
         }
     }
 }

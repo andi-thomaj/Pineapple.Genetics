@@ -1,4 +1,4 @@
-﻿namespace Domain.Shared
+﻿namespace Infrastructure.EntityFramework
 {
     public class BaseConfiguration
     {

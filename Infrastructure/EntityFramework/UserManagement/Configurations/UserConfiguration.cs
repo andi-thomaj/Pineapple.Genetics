@@ -1,8 +1,8 @@
-﻿using Domain.Shared;
+﻿using Domain.UserManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.UserManagement.Configurations
+namespace Infrastructure.EntityFramework.UserManagement.Configurations
 {
     public class UserConfiguration : BaseConfiguration, IEntityTypeConfiguration<User>
     {

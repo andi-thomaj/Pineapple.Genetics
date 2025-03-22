@@ -23,7 +23,7 @@ namespace WebApi
                 .AddMvcOptions(options =>
                 {
                     options.Conventions.Add(new RouteTokenTransformerConvention(new LowercaseRouteTransformer()));
-                }); ;
+                });
             services.AddOpenApi();
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
             services.AddFluentValidation([typeof(Program).Assembly]);
