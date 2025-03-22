@@ -17,7 +17,7 @@ namespace Infrastructure.EntityFramework
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("Domain"));
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(ApplicationDbContext))!);
 
             modelBuilder.Entity<Role>().HasData([
                 new Role { Id = (int)Domain.UserManagement.Roles.Admin, Name = Domain.UserManagement.Roles.Admin.ToString() },

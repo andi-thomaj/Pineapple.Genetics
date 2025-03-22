@@ -34,5 +34,8 @@ namespace Infrastructure.EntityFramework.UserManagement.Repository
             dbContext.Users.Update(user);
             await dbContext.SaveChangesAsync();
         }
+
+        public async Task<User?> LoginUser(string email, string password)
+         => await dbContext.Users.FirstOrDefaultAsync(x => x.Email == email && x.Password == password);
     }
 }

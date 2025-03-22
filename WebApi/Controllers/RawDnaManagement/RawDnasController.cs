@@ -4,7 +4,7 @@ namespace WebApi.Controllers.RawDnaManagement
 {
     [ApiController]
     [Route("[controller]")]
-    public class RawDnaController : ControllerBase
+    public class RawDnasController : ControllerBase
     {
     }
 }

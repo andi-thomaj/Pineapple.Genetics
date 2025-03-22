@@ -1,6 +1,6 @@
 ﻿using Domain.UserManagement;
-using Domain.UserManagement.Configurations;
 using FluentValidation;
+using Infrastructure.EntityFramework.UserManagement.Configurations;
 using Infrastructure.EntityFramework.UserManagement.Repository;
 using Infrastructure.Services.Abstractions;
 using MediatR;

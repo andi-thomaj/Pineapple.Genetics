@@ -12,5 +12,6 @@ namespace Infrastructure.EntityFramework.UserManagement.Repository
         Task<bool> PasswordIsCorrect(string email, string password);
         Task<bool> UsernameExists(string username);
         Task UpdateUser(User user);
+        Task<User?> LoginUser(string email, string password);
     }
 }

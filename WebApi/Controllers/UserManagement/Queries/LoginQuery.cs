@@ -25,12 +25,14 @@ namespace WebApi.Controllers.UserManagement.Queries
         public LoginQueryValidator(IUserRepository userRepository)
         {
             RuleFor(x => x.Email)
+                .NotNull()
                 .NotEmpty()
                 .EmailAddress()
                 .MustAsync(async (email, _) => await userRepository.EmailExists(email))
                 .WithMessage((command, email) => $"Email address: {email} doesn't exist.");
 
             RuleFor(x => x.Password)
+                .NotNull()
                 .NotEmpty()
                 .MinimumLength(8)
                 .MaximumLength(20)

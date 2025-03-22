@@ -1,8 +1,12 @@
 using System.Text;
 using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.UserManagement.Repository;
+using Infrastructure.Options;
+using Infrastructure.Services.Abstractions;
+using Infrastructure.Services.Implementations;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +38,7 @@ namespace WebApi
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -41,15 +46,25 @@ namespace WebApi
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = builder.Configuration["AppSettings:Issuer"],
+                        ValidIssuer = builder.Configuration[$"{nameof(JwtOptions)}:{nameof(JwtOptions.Issuer)}"],
                         ValidateAudience = true,
-                        ValidAudience = builder.Configuration["AppSettings:Audience"],
+                        ValidAudience = builder.Configuration[$"{nameof(JwtOptions)}:{nameof(JwtOptions.Audience)}"],
                         ValidateLifetime = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!)),
+                            Encoding.UTF8.GetBytes(builder.Configuration[$"{nameof(JwtOptions)}:{nameof(JwtOptions.Secret)}"]!)),
                         ValidateIssuerSigningKey = true
                     };
                 });
+
+            services.AddOptions<DatabaseOptions>()
+                .Bind(configuration.GetSection(DatabaseOptions.SectionName))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            services.AddOptions<JwtOptions>()
+                .Bind(configuration.GetSection(JwtOptions.SectionName))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
             var app = builder.Build();
 

@@ -1,6 +1,4 @@
-﻿using Domain.Shared;
-
-namespace Domain.UserManagement
+﻿namespace Domain.UserManagement
 {
     public class Role : BaseEntity
     {
